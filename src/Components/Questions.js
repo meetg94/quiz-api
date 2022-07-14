@@ -1,26 +1,22 @@
 import { useState } from 'react'
+import RenderChoice from './RenderChoice'
 
-function Questions({ data, currentQuestion }) {
+function Questions({ data, currentQuestion, handleAnswer }) {
 
-    const handleIncorrect = () => {
-        data.map(question => {
-            if (question.incorrect_answers.length > 0) {
-                return question.incorrect_answers.map(answer => {
-                    return answer
-                }
-                )
-            }
-        })
-    }
+    let questions = data[currentQuestion]
+    let questionQuote = questions.question.replace('&quot;', '"')
 
-    let answersArray = []
-    
+    return (
+        <div>
+            <h1>Question {currentQuestion+1} of {data.length}</h1>
+            <h2>{questionQuote}</h2>
+            <RenderChoice
+                handleAnswer={handleAnswer}
+                incorrect_answers={questions.incorrect_answers}
+                correct_answer={questions.correct_answer}/>
+        </div>
+    )
 
-    
-  return (
-    <div>
-    </div>
-  )
 }
 
 export default Questions

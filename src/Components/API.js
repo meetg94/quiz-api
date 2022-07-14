@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
+import RenderChoice from './RenderChoice';
 
 function API() {
 
@@ -41,23 +42,41 @@ function API() {
 
   return (
     <div>
-        <h1>Quiz Ap</h1>
-        <h1>Question {currentQuestion+1} of {data.length}</h1>
-        {data.map ((question, index) => {
-            if (index === currentQuestion) {
-                return (
-                    <div>
-                        <h2>{question.question}</h2>
-                        <button onClick={() => handleAnswer(question.correct_answer)}>{question.correct_answer}</button>
-                        <button onClick={() => handleAnswer(question.incorrect_answers[0])}>{question.incorrect_answers[0]}</button>
-                        <button onClick={() => handleAnswer(question.incorrect_answers[1])}>{question.incorrect_answers[1]}</button>
-                        <button onClick={() => handleAnswer(question.incorrect_answers[2])}>{question.incorrect_answers[2]}</button>
-                    </div>
-                )
-            }})
+        <h1>Quiz App</h1>
+        {showResult ? (
+            <div>
+                <h2>Your score is {score}</h2>
+                <h2>Your previous score is {previousScore.join(', ')}</h2>
+                <button onClick={handleRestart}>Restart</button>
+            </div>
+         ) : (
+            <div>
+            <h1>Question {currentQuestion+1} of {data.length}</h1>
+            {data.map ((question, index) => {
+                const entities = {
+                    '&quot;': '"',
+                    '&amp;': '&',
+                    '&#039;': "'",
+                    '&rdquo;': '"',
+                }
+                if (index === currentQuestion) {
+                    const questionQuote = question.question.replace(/&quot;|&amp;|&#039;|&lt;|&gt;|&#x27;/g, (match) => entities[match])
+                    return (
+                        <div>
+                            <h2>{questionQuote}</h2>
+                            <RenderChoice 
+                                handleAnswer={handleAnswer} 
+                                incorrect_answers={question.incorrect_answers} 
+                                correct_answer={question.correct_answer}/>
+                        </div>
+                    )
+                }
+            }
+        )}
+        </div>
+        )
         }
     </div>
-  )
+    )
 }
-
 export default API
