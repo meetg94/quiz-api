@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+
 function RenderChoice({handleAnswer, incorrect_answers, correct_answer}) {
 
     let answers = [correct_answer, ...incorrect_answers]
@@ -7,9 +9,9 @@ function RenderChoice({handleAnswer, incorrect_answers, correct_answer}) {
     <div>
         {answers.map ((answer, index) => {
             return (
-                <div key={index}>
+                <div key={index} className='answers-button'>
                   <li>
-                    <button onClick={() => handleAnswer(answer)}>{answer}</button>
+                    <Button variant="contained" onClick={() => handleAnswer(answer)}>{answer}</Button>
                   </li>
                 </div>
               )

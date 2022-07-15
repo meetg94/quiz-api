@@ -1,6 +1,9 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import RenderChoice from './RenderChoice';
+import ScoreBoard from './ScoreBoard';
+import HomePage from './HomePage';
+import { Button } from '@mui/material';
 
 function API() {
 
@@ -41,13 +44,17 @@ function API() {
     }
 
   return (
-    <div>
+        <div className='quiz-container'>
+        <HomePage />
+        <ScoreBoard 
+            score={score}
+            />
         <h1>Quiz App</h1>
         {showResult ? (
             <div>
                 <h2>Your score is {score}</h2>
                 <h2>Your previous score is {previousScore.join(', ')}</h2>
-                <button onClick={handleRestart}>Restart</button>
+                <Button variant='contained' onClick={handleRestart}>Restart</Button>
             </div>
          ) : (
             <div>
