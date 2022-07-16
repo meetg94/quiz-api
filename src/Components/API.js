@@ -2,27 +2,14 @@ import { useState, useEffect} from 'react'
 import axios from 'axios'
 import RenderChoice from './RenderChoice';
 import ScoreBoard from './ScoreBoard';
-import HomePage from './HomePage';
 import { Button } from '@mui/material';
 
-function API() {
-
-    const [data, setData] = useState([]);
+function API({data}) {
+    
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [showResult, setShowResult] = useState(false);
     const [previousScore, setPreviousScore] = useState([]);
-
-    const getData = async () => {
-        const response = await axios.get('https://opentdb.com/api.php?amount=10')
-        setData(response.data.results)
-        console.log(response.data.results)
-    }
-
-    useEffect(() => {
-        getData()
-    }
-    , [])
 
     const handleAnswer = (answer) => {
         if (answer === data[currentQuestion].correct_answer) {
@@ -45,7 +32,6 @@ function API() {
 
   return (
         <div className='quiz-container'>
-        <HomePage />
         <ScoreBoard 
             score={score}
             />
